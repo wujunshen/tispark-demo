@@ -22,7 +22,10 @@ public class SparkConfig {
 
     @Bean
     public TiContext getTiContext() {
-        log.info("ApplicationName is:{}\nmaster uri is:{}\n", sparkProperties.getApplicationName(), sparkProperties.getMasterURI());
+        log.info("\nApplicationName is:{}\nmaster uri is:{}\nspark.tispark.pd.addresses is:{}\n",
+                sparkProperties.getApplicationName(),
+                sparkProperties.getMasterURI(),
+                sparkProperties.getPdAddress());
 
         SparkSession sparkSession = SparkSession
                 .builder()
