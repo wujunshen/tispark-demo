@@ -1,8 +1,10 @@
 
 安装完tidb集群环境后，我就需要编写一个客户端来访问tidb，使用tispark来编写相应的业务需求功能。不过坑太多了，当中我碰到各种问题，在此文中我会先把相应的过程记录下来，再告诉大家我碰到的几个坑和解决方案。并提供我的代码示例在文后
 
-#准备
-##最方便的做法
+# 准备
+
+## 最方便的做法
+
 在项目的doc目录下，将tispark-0.1.0-SNAPSHOT.jar
 按照如下格式
 
@@ -15,7 +17,9 @@
 ```
 
 上传到你自己的maven私服即可
-##比较麻烦的做法
+
+## 比较麻烦的做法
+
 访问github，按照下列步骤打包编译tispark-0.1.0-SNAPSHOT.jar
 首先你要打包编译tikv-client
 项目路径
@@ -38,12 +42,14 @@ mvn clean install -DskipTests -Dmaven.test.skip=true
 ```
 在target目录下找到tispark-0.1.0-SNAPSHOT.jar，按照1所述上传到自己的maven私服即可
 
-#项目编译
+# 项目编译
+
 ```
 mvn clean install -DskipTests -Dmaven.test.skip=true
 ```
 
-#解释
+# 解释
+
 见SparkConfig.java文件，如下
 
 ![图1.png](http://upload-images.jianshu.io/upload_images/3901033-0885c68b4b3c0a91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -55,19 +61,20 @@ mvn clean install -DskipTests -Dmaven.test.skip=true
 
 ![图2.png](http://upload-images.jianshu.io/upload_images/3901033-aced4ea62dfde3e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-#问题
-##版本问题
+# 问题
+
+## 版本问题
 
 我的tidb集群环境其中集成的spark是2.1.1版本，因此自身的springboot项目的pom文件中的spark依赖包版本要与之对应，见下图
 
 ![图3.png](http://upload-images.jianshu.io/upload_images/3901033-5805bfa7b1be069e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-##依赖包缺失
+## 依赖包缺失
 
 SparkConfig中需要设定pd server的ip和端口，这样执行TisparkDemoApplication类时不会报错，否则会报找不到spark.tispark.pd.addresses错误，如下图
 ![图4.png](http://upload-images.jianshu.io/upload_images/3901033-0a4603a1381ca18a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-##TiKV-client的依赖声明要显式声明
+## TiKV-client的依赖声明要显式声明
 
 也就说下面这段pom文件里必须要有
 ```
@@ -81,7 +88,7 @@ SparkConfig中需要设定pd server的ip和端口，这样执行TisparkDemoAppli
 
 ![图5.png](http://upload-images.jianshu.io/upload_images/3901033-473447bd104cf4ce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-##TiKV端口随机生成
+## TiKV端口随机生成
 
 因为tidb集群中tikv节点的端口，在启动时都是随机生成的，这就带来一个问题。开发用的电脑是外网，要访问tidb集群必须要做端口映射，但是每次启动TisparkDemoApplication类时需要访问的tikv节点端口都是随机生成的，无法提前预知端口号来进行映射，从而造成每次都连接不到tikv节点。tidb的PD Server就会不停重试连接，到达一定次数会报exhaust错误。见下图红框
 
@@ -93,7 +100,8 @@ SparkConfig中需要设定pd server的ip和端口，这样执行TisparkDemoAppli
 ```
 java -jar /usr/local/tispark-demo-0.1.jar
 ```
-#参考链接
+
+# 参考链接
 
 [1][tikv-client](https://github.com/pingcap/tikv-client-lib-java/tree/c050a3f69e2a2ed15b6358a37a52f05b314b795e)
 
