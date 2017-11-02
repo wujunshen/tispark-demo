@@ -21,8 +21,11 @@
 ## 比较麻烦的做法
 
 访问github，按照下列步骤打包编译tispark-0.1.0-SNAPSHOT.jar
+
 首先你要打包编译tikv-client
+
 项目路径
+
 https://github.com/pingcap/tikv-client-lib-java/tree/c050a3f69e2a2ed15b6358a37a52f05b314b795e
 
 打包tikv-client项目
@@ -33,14 +36,17 @@ mvn clean install -DskipTests -Dmaven.test.skip=true
 接着打包编译tispark
 
 项目路径
+
 https://github.com/pingcap/tispark
 
 打包tispark项目
+
 ```
 git clone https://github.com/pingcap/tispark.git
 mvn clean install -DskipTests -Dmaven.test.skip=true
 ```
-在target目录下找到tispark-0.1.0-SNAPSHOT.jar，按照1所述上传到自己的maven私服即可
+
+在target目录下找到tispark-0.1.0-SNAPSHOT.jar，按照前面所述上传到自己的maven私服即可
 
 # 项目编译
 
