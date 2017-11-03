@@ -38,6 +38,10 @@ public class DemoServiceImpl implements DemoService {
         Dataset dataset2 = dataset.sqlContext().sql("select count(*) from CUSTOMER");
         dataset2.show();
 
-        tiContext.session().stop();
+        //tiContext.tidbMapDatabase("TPCH_001", false);
+        //Dataset dataset1 = tiContext.session().sql("select count(*) from CUSTOMER");
+        //dataset1.show();
+
+        //tiContext.session().stop();
     }
 }
