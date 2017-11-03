@@ -17,4 +17,7 @@ public class SparkProperties {
     private String applicationName;
     private String masterURI;
     private String pdAddress;
+    private String url;
+    private String user;
+    private String password;
 }

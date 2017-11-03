@@ -36,9 +36,6 @@ public class SparkConfig {
                 .appName(sparkProperties.getApplicationName())
                 .getOrCreate();
 
-        TiContext tiContext = new TiContext(sparkSession);
-        tiContext.tidbMapDatabase("TPCH_001", false);
-
-        return tiContext;
+        return new TiContext(sparkSession);
     }
 }
